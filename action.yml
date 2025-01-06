@@ -181,7 +181,7 @@ runs:
           LogshExec echo "missing-files=" >> $GITHUB_OUTPUT
         fi
 
-        if [[ "${{ inputs.fail-on-missing }}" == 'true' ]]; then
+        if [[ "${{ inputs.fail-on-missing }}" == 'true' ]] && [[ -n "${missing_files:-}" ]]; then
           LogshError "==> Missing final newline files <=="
           LogshError "$(printf "${missing_files:?}")"
           exit 1
