@@ -158,7 +158,7 @@ runs:
           LogshDebug "==> files_changed (applied paths-ignore) <=="
           LogshDebug "${files_changed:-(empty)}"
         else
-          LogshWarn "paths and paths-ignore are not set."
+          LogshInfo "paths and paths-ignore are not set."
           files_changed=$(echo "${files_changed:?}")
         fi
 
