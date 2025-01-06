@@ -2,7 +2,6 @@ name: example
 
 on:
   pull_request:
-    # NO paths filter
 
 jobs:
   missing-final-newline:
@@ -16,9 +15,8 @@ jobs:
         with:
           # NOTE: If you want to fail on missing final newline, set this to true
           #fail-on-missing: true
-          paths: |-
-            ^action.yml
-            ^missing-final-newline.md
+          paths-ignore: |-
+            ^README.md$
       - name: Submit PR comment if missing final newline
         if: ${{ steps.missing-final-newline.outputs.missing == 'true' }}
         env:
