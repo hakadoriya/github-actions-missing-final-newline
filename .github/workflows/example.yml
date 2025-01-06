@@ -7,9 +7,9 @@ on:
 jobs:
   missing-final-newline:
     runs-on: ubuntu-latest
-    outputs:
-      missing: ${{ steps.missing-final-newline.outputs.missing }}
-      missing-files: ${{ steps.missing-final-newline.outputs.missing-files }}
+    permissions:
+      contents: read
+      pull-requests: write
     steps:
       - uses: hakadoriya/github-actions-missing-final-newline@develop
         id: missing-final-newline
@@ -19,14 +19,22 @@ jobs:
           paths: |-
             ^action.yml
             ^missing-final-newline.md
-  # > Note: A job that is skipped will report its status as "Success".
-  # > It will not prevent a pull request from merging, even if it is a required check.
-  # ref. https://docs.github.com/en/actions/using-jobs/using-conditions-to-control-job-execution#overview
-  missing:
-    runs-on: ubuntu-latest
-    needs: missing-final-newline
-    if: ${{ needs.missing-final-newline.outputs.missing == 'true' }}
-    steps:
-      - name: "missing final newline detected"
+      - name: Submit PR comment if missing final newline
+        if: ${{ steps.missing-final-newline.outputs.missing == 'true' }}
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: |
-            echo "needs.missing-final-newline.outputs.missing-files: ${{ needs.missing-final-newline.outputs.missing-files }}"
+          # Create comment body
+          cat <<EOF | perl -pe 's/\\n/\n/g' | tee /tmp/gh-pr-comment-body.md
+          ## 🚨 Missing final newline
+
+          The following files are missing final newline.
+
+          \`\`\`
+          ${{ steps.missing-final-newline.outputs.missing-files }}
+          \`\`\`
+          EOF
+          # Submit PR comment
+          gh pr comment ${{ github.event.pull_request.number }} --body-file /tmp/gh-pr-comment-body.md
+          # fail the workflow
+          exit 1
