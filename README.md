@@ -1,4 +1,4 @@
-# GitHub Actions Missing Final Newline
+# github-actions-missing-final-newline
 
 A workflow to check missing final newline.
 
@@ -9,7 +9,6 @@ name: example
 
 on:
   pull_request:
-    # NO paths filter
 
 jobs:
   missing-final-newline:
@@ -18,14 +17,13 @@ jobs:
       contents: read
       pull-requests: write
     steps:
-      - uses: hakadoriya/github-actions-missing-final-newline@main
+      - uses: hakadoriya/github-actions-missing-final-newline@v0.0.1
         id: missing-final-newline
         with:
           # NOTE: If you want to fail on missing final newline, set this to true
           #fail-on-missing: true
-          paths: |-
-            ^action.yml
-            ^missing-final-newline.md
+          paths-ignore: |-
+            ^README.md$
       - name: Submit PR comment if missing final newline
         if: ${{ steps.missing-final-newline.outputs.missing == 'true' }}
         env:
