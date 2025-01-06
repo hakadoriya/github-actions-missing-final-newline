@@ -25,6 +25,7 @@ jobs:
           #fail-on-missing: true
           paths: |-
             ^action.yml
+            ^missing-final-newline.md
   # > Note: A job that is skipped will report its status as "Success".
   # > It will not prevent a pull request from merging, even if it is a required check.
   # ref. https://docs.github.com/en/actions/using-jobs/using-conditions-to-control-job-execution#overview
