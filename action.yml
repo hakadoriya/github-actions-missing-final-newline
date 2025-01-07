@@ -166,7 +166,7 @@ runs:
         while read -r FILE; do
           if [[ $(tail -c 1 "${FILE:?}") != $(printf '\n') ]]; then
             LogshDebug "Missing final newline: ${FILE:?}"
-            missing_files="${missing_files:-}${missing_files:+'\n'}${FILE:?}"
+            missing_files="${missing_files:-}${missing_files:+\n}${FILE:?}"
           fi
         done <<< "${files_changed:-}"
 
