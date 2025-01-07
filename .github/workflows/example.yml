@@ -10,7 +10,7 @@ jobs:
       contents: read
       pull-requests: write
     steps:
-      - uses: hakadoriya/github-actions-missing-final-newline@develop
+      - uses: hakadoriya-actions/final-newline-checker@develop
         id: missing-final-newline
         with:
           # NOTE: If you want to fail on missing final newline, set this to true

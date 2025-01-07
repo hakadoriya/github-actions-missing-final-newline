@@ -1,4 +1,4 @@
-# github-actions-missing-final-newline
+# final-newline-checker
 
 A workflow to check missing final newline.
 
@@ -17,7 +17,7 @@ jobs:
       contents: read
       pull-requests: write
     steps:
-      - uses: hakadoriya/github-actions-missing-final-newline@v0.0.1
+      - uses: hakadoriya-actions/final-newline-checker@v0.0.1
         id: missing-final-newline
         with:
           # NOTE: If you want to fail on missing final newline, set this to true

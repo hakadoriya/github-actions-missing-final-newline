@@ -1,4 +1,4 @@
-name: github-actions-missing-final-newline
+name: final-newline-checker
 # MEMO: Description must be less than 125 characters.
 description: 'A workflow to check missing final newline.'
 author: 'hakadoriya'
@@ -70,7 +70,7 @@ runs:
       uses: actions/checkout@v4
       with:
         fetch-depth: 0
-    - name: github-actions-missing-final-newline
+    - name: final-newline-checker
       id: missing-final-newline
       shell: 'bash'
       env:
