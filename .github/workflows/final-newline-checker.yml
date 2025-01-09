@@ -2,7 +2,6 @@ name: final-newline-checker
 
 on:
   pull_request:
-    # NO paths filter
 
 jobs:
   final-newline-checker:
