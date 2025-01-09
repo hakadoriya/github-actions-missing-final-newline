@@ -5,27 +5,37 @@ A workflow to check missing final newline.
 ## example
 
 ```yml
-name: example
+name: final-newline-checker
 
 on:
   pull_request:
 
 jobs:
-  missing-final-newline:
+  final-newline-checker:
     runs-on: ubuntu-latest
     permissions:
       contents: read
       pull-requests: write
     steps:
       - uses: hakadoriya-actions/final-newline-checker@v0.0.1
-        id: missing-final-newline
+        id: final-newline-checker
         with:
           # NOTE: If you want to fail on missing final newline, set this to true
           #fail-on-missing: true
+          #paths: |-
+          #  ^action.yml
+          #  ^missing-final-newline.md
           paths-ignore: |-
-            ^README.md$
+            .*\.gif$
+            .*\.ico$
+            .*\.jpeg$
+            .*\.jpg$
+            .*\.png$
+            .*\.svg$
+            .*\.webp$
+      - uses: hakadoriya-actions/setup-gh-xz@v0.0.1
       - name: Submit PR comment if missing final newline
-        if: ${{ steps.missing-final-newline.outputs.missing == 'true' }}
+        if: ${{ steps.final-newline-checker.outputs.missing == 'true' }}
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
@@ -36,11 +46,11 @@ jobs:
           The following files are missing final newline.
 
           \`\`\`
-          ${{ steps.missing-final-newline.outputs.missing-files }}
+          ${{ steps.final-newline-checker.outputs.missing-files }}
           \`\`\`
           EOF
           # Submit PR comment
-          gh pr comment ${{ github.event.pull_request.number }} --body-file /tmp/gh-pr-comment-body.md
+          gh xz put-annotated-comment ${{ github.repository }} ${{ github.event.number }} annotation:final-newline-checker @/tmp/gh-pr-comment-body.md
           # fail the workflow
           exit 1
 ```
