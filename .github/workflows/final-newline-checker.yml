@@ -43,6 +43,6 @@ jobs:
           \`\`\`
           EOF
           # Submit PR comment
-          gh xz put-annotated-comment ${{ github.repository }} ${{ github.event.number }} annotation:final-newline-checker @/tmp/gh-pr-comment-body.md
+          gh xz put-anchored-comment ${{ github.repository }} ${{ github.event.number }} anchor:final-newline-checker @/tmp/gh-pr-comment-body.md
           # fail the workflow
           exit 1
