@@ -1,4 +1,4 @@
-name: final-newline-checker
+name: hakadoriya-actions-final-newline-checker
 # MEMO: Description must be less than 125 characters.
 description: 'A workflow to check missing final newline.'
 author: 'hakadoriya'
